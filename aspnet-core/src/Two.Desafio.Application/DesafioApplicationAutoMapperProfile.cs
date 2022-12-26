@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Two.Desafio.Authors;
 using Two.Desafio.Books;
 
 namespace Two.Desafio;
@@ -13,5 +14,7 @@ public class DesafioApplicationAutoMapperProfile : Profile
 
         CreateMap<Book, BookDto>();
         CreateMap<CreateUpdateBookDto, Book>();
+        CreateMap<Author, AuthorDto>();
+
     }
 }

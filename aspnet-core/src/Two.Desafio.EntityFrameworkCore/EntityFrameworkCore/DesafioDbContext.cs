@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Two.Desafio.Authors;
 using Two.Desafio.Books;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -27,6 +28,8 @@ public class DesafioDbContext :
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
     public DbSet<Book> Books { get; set; }
+    public DbSet<Author> Authors { get; set; }
+
     #region Entities from the modules
 
     /* Notice: We only implemented IIdentityDbContext and ITenantManagementDbContext
@@ -91,5 +94,20 @@ public class DesafioDbContext :
             b.ConfigureByConvention(); //auto configure for the base class props
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
         });
+
+        builder.Entity<Author>(b =>
+        {
+            b.ToTable(DesafioConsts.DbTablePrefix + "Authors",
+                DesafioConsts.DbSchema);
+
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(AuthorConsts.MaxNameLength);
+
+            b.HasIndex(x => x.Name);
+        });
+
     }
 }

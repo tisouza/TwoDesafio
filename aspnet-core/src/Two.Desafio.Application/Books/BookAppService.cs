@@ -1,4 +1,5 @@
 ﻿using System;
+using Two.Desafio.Permissions;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -17,6 +18,11 @@ namespace Two.Desafio.Books
         public BookAppService(IRepository<Book, Guid> repository)
             : base(repository)
         {
+            GetPolicyName = DesafioPermissions.Books.Default;
+            GetListPolicyName = DesafioPermissions.Books.Default;
+            CreatePolicyName = DesafioPermissions.Books.Create;
+            UpdatePolicyName = DesafioPermissions.Books.Edit;
+            DeletePolicyName = DesafioPermissions.Books.Delete;
 
         }
     }
