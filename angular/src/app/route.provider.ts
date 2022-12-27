@@ -29,6 +29,14 @@ function configureRoutes(routesService: RoutesService) {
         layout: eLayoutType.application,
         requiredPolicy: 'Desafio.Books'
       },
+      {
+        path: '/authors',
+        name: '::Menu:Authors',
+        parentName: '::Menu:BookStore',
+        layout: eLayoutType.application,
+        requiredPolicy: 'Desafio.Authors',
+      }
+      
     ]);
   };
 }

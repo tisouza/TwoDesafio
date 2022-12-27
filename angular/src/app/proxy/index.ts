@@ -1,3 +1,4 @@
+import * as Authors from './authors';
 import * as Books from './books';
 import * as Domain from './domain';
-export { Books, Domain };
+export { Authors, Books, Domain };
