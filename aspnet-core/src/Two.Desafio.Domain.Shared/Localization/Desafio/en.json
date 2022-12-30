@@ -3,6 +3,8 @@
   "Texts": {
     "Menu:Home": "Home",
     "Welcome": "Welcome",
+    "Email": "Email",
+    "Job": "Job",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
     "Menu:BookStore": "Book Store",
     "Menu:Books": "Books",
@@ -44,7 +46,21 @@
     "Authors": "Authors",
     "AuthorDeletionConfirmationMessage": "Are you sure to delete the author '{0}'?",
     "BirthDate": "Birth date",
-    "NewAuthor": "New author"
+    "NewAuthor": "New author",
+    "Permission:Pessoas": "Person Management",
+    "Permission:Pessoas.Create": "Creating new person",
+    "Permission:Pessoas.Edit": "Editing the person",
+    "Permission:Pessoas.Delete": "Deleting the person",
+    "Desafio:00002": "There is already an person with the same name: {name}",
+    "Desafio:00003": "There is already an person with the same email: {email}",
+    "Desafio:00004": "This person is not an adult!",
+    "Menu:Persons": "Persons",
+    "Menu:PersonsManagement": "Persons",
+    "Persons": "Persons",
+    "NewPessoa": "New person",
+    "PersonDeletionConfirmationMessage": "Are you sure to delete the person '{0}'?",
+    "Desafio:00005": "Invalid name: {name}"
+
 
 
 

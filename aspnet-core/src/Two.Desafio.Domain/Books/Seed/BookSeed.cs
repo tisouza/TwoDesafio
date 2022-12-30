@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 using Two.Desafio.Authors;
 using Two.Desafio.Books;
 using Two.Desafio.Domain.Shared.Books;
+using Two.Desafio.Pessoas;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
@@ -15,15 +18,22 @@ namespace Two.Desafio
         private readonly IRepository<Book, Guid> _bookRepository;
         private readonly IAuthorRepository _authorRepository;
         private readonly AuthorManager _authorManager;
+        private readonly IPessoaRepository _pessoaRepository;
+        private readonly PessoaManager _pessoaManager;
 
         public BookStoreDataSeederContributor(
             IRepository<Book, Guid> bookRepository,
             IAuthorRepository authorRepository,
-            AuthorManager authorManager)
+            IPessoaRepository pessoaRepository,
+            AuthorManager authorManager,
+            PessoaManager pessoaManager
+            )
         {
             _bookRepository = bookRepository;
             _authorRepository = authorRepository;
             _authorManager = authorManager;
+            _pessoaRepository = pessoaRepository;
+            _pessoaManager = pessoaManager;
         }
 
         public async Task SeedAsync(DataSeedContext context)
@@ -72,6 +82,15 @@ namespace Two.Desafio
                 },
                 autoSave: true
             );
+
+            List<Pessoa> listaPessoas = new List<Pessoa>();
+            for (int i = 0; i < 100; i++)
+            {
+                var pessoa = await _pessoaManager.CreateAsync
+                    ("nome " + i.ToString(), DateTime.Now.AddYears(-18), $"email{i.ToString()}@example.com", "Any Job");
+                listaPessoas.Add(pessoa);
+            }
+            await _pessoaRepository.InsertManyAsync(listaPessoas, true);
         }
     }
 }

@@ -16,17 +16,15 @@ public class DesafioPermissionDefinitionProvider : PermissionDefinitionProvider
         booksPermission.AddChild(DesafioPermissions.Books.Edit, L("Permission:Books.Edit"));
         booksPermission.AddChild(DesafioPermissions.Books.Delete, L("Permission:Books.Delete"));
 
-        var authorsPermission = myGroup.AddPermission(
-    DesafioPermissions.Authors.Default, L("Permission:Authors"));
+        var authorsPermission = myGroup.AddPermission(DesafioPermissions.Authors.Default, L("Permission:Authors"));
+        authorsPermission.AddChild(DesafioPermissions.Authors.Create, L("Permission:Authors.Create"));
+        authorsPermission.AddChild(DesafioPermissions.Authors.Edit, L("Permission:Authors.Edit"));
+        authorsPermission.AddChild(DesafioPermissions.Authors.Delete, L("Permission:Authors.Delete"));
 
-        authorsPermission.AddChild(
-            DesafioPermissions.Authors.Create, L("Permission:Authors.Create"));
-
-        authorsPermission.AddChild(
-            DesafioPermissions.Authors.Edit, L("Permission:Authors.Edit"));
-
-        authorsPermission.AddChild(
-            DesafioPermissions.Authors.Delete, L("Permission:Authors.Delete"));
+        var personsPermission = myGroup.AddPermission(DesafioPermissions.Pessoas.Default, L("Permission:Pessoas"));
+        personsPermission.AddChild(DesafioPermissions.Pessoas.Create, L("Permission:Pessoas.Create"));
+        personsPermission.AddChild(DesafioPermissions.Pessoas.Edit, L("Permission:Pessoas.Edit"));
+        personsPermission.AddChild(DesafioPermissions.Pessoas.Delete, L("Permission:Pessoas.Delete"));
 
     }
 

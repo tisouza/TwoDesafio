@@ -35,7 +35,22 @@ function configureRoutes(routesService: RoutesService) {
         parentName: '::Menu:BookStore',
         layout: eLayoutType.application,
         requiredPolicy: 'Desafio.Authors',
+      },
+      {
+        path: '/pessoas-management',
+        name: '::Menu:PersonsManagement',
+        iconClass: 'fas fa-book',
+        order: 3,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/pessoas',
+        name: '::Menu:Persons',
+        parentName: '::Menu:PersonsManagement',
+        layout: eLayoutType.application,
+        requiredPolicy: 'Desafio.Persons',
       }
+      
       
     ]);
   };
