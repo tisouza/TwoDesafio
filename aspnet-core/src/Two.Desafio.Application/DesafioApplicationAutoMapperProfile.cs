@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Two.Desafio.Authors;
 using Two.Desafio.Books;
+using Two.Desafio.Pessoas;
 
 namespace Two.Desafio;
 
@@ -16,6 +17,10 @@ public class DesafioApplicationAutoMapperProfile : Profile
         CreateMap<CreateUpdateBookDto, Book>();
         CreateMap<Author, AuthorDto>();
         CreateMap<Author, AuthorLookupDto>();
+        CreateMap<Pessoa, PessoaDto>();
+        CreateMap<CreatePessoaDto ,Pessoa>();
+        CreateMap<UpdatePessoaDto, Pessoa>();
+
 
 
     }

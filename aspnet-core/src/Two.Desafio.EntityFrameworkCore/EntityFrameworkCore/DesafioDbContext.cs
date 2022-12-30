@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Two.Desafio.Authors;
 using Two.Desafio.Books;
+using Two.Desafio.Pessoas;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -29,6 +30,9 @@ public class DesafioDbContext :
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
     public DbSet<Book> Books { get; set; }
     public DbSet<Author> Authors { get; set; }
+
+    public DbSet<Pessoa> Pessoas { get; set; }
+
 
     #region Entities from the modules
 
@@ -109,6 +113,28 @@ public class DesafioDbContext :
                 .HasMaxLength(AuthorConsts.MaxNameLength);
 
             b.HasIndex(x => x.Name);
+        });
+
+        builder.Entity<Pessoa>(b =>
+        {
+            b.ToTable(DesafioConsts.DbTablePrefix + "Pessoas",
+                DesafioConsts.DbSchema);
+
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(PessoaConsts.MaxNameLength);
+
+            b.Property(x => x.Email)
+                .IsRequired()
+                .HasMaxLength(PessoaConsts.MaxEmailLength);
+
+            b.Property(x => x.Job)
+                .HasMaxLength(PessoaConsts.MaxJobLength);
+
+            b.HasIndex(x => x.Name);
+            b.HasIndex(x => x.Email);
         });
 
     }
