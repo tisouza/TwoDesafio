@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Two.Desafio.Authors;
 using Two.Desafio.Books;
 using Two.Desafio.Pessoas;
@@ -16,6 +16,7 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
 
 namespace Two.Desafio.EntityFrameworkCore;
 
@@ -137,5 +138,6 @@ public class DesafioDbContext :
             b.HasIndex(x => x.Email);
         });
 
-    }
+        builder.ConfigureBlobStoring();
+        }
 }

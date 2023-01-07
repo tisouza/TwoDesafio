@@ -32,6 +32,7 @@
     "Menu:PersonsManagement": "Persone",
     "Persons": "Persone",
     "NewPessoa": "Nova Persone",
-    "PersonDeletionConfirmationMessage": "Vuoi eliminare questa persona '{0}'?"
+    "PersonDeletionConfirmationMessage": "Vuoi eliminare questa persona '{0}'?",
+    "File": "Archivio"
   }
 }

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Volo.Abp;
+using Volo.Abp.Caching;
 using Volo.Abp.Domain.Services;
 
 namespace Two.Desafio.Authors
@@ -9,10 +10,12 @@ namespace Two.Desafio.Authors
     public class AuthorManager : DomainService
     {
         private readonly IAuthorRepository _authorRepository;
+        
 
         public AuthorManager(IAuthorRepository authorRepository)
         {
             _authorRepository = authorRepository;
+            
         }
 
         public async Task<Author> CreateAsync(
@@ -51,5 +54,7 @@ namespace Two.Desafio.Authors
 
             author.ChangeName(newName);
         }
+
+       
     }
 }

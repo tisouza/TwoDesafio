@@ -59,7 +59,9 @@
     "Persons": "Persons",
     "NewPessoa": "New person",
     "PersonDeletionConfirmationMessage": "Are you sure to delete the person '{0}'?",
-    "Desafio:00005": "Invalid name: {name}"
+    "Desafio:00005": "Invalid name: {name}",
+    "File": "File"
+
 
 
 

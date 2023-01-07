@@ -23,7 +23,9 @@ namespace Two.Desafio.Pessoas
         [StringLength(PessoaConsts.MaxJobLength)]
         public string Job { get; set; }
 
-        
+        public string File { get; set; }
+
+
 
     }
 }

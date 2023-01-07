@@ -16,6 +16,8 @@ public class DesafioApplicationAutoMapperProfile : Profile
         CreateMap<Book, BookDto>();
         CreateMap<CreateUpdateBookDto, Book>();
         CreateMap<Author, AuthorDto>();
+        CreateMap<Author, AuthorCacheItem>();
+        CreateMap<AuthorCacheItem, AuthorDto>();
         CreateMap<Author, AuthorLookupDto>();
         CreateMap<Pessoa, PessoaDto>();
         CreateMap<CreatePessoaDto ,Pessoa>();

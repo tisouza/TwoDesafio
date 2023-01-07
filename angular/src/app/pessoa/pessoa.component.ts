@@ -21,7 +21,9 @@ export class PessoaComponent implements OnInit {
 
   selectedPessoa = {} as PessoaDto;
   customValidatorEmail = false;
-email =  new FormControl(this.selectedPessoa.email || '', [Validators.required, Validators.email, customValidator()]);
+  email =  new FormControl(this.selectedPessoa.email || '', [Validators.required, Validators.email, customValidator()]);
+  file: File;
+
   constructor(
     public readonly list: ListService,
     private pessoaService: PessoaService,
@@ -59,11 +61,32 @@ email =  new FormControl(this.selectedPessoa.email || '', [Validators.required, 
         Validators.required,
       ],
       email: this.email,
-      job:[this.selectedPessoa.job || '']
+      job:[this.selectedPessoa.job || ''],
+      file: [this.selectedPessoa.file || null]
     });
   }
 
-  
+  async onChangeFile(event) {
+    
+    this.file = event.target.files[0];
+    let arquivo = await this.getBase64(this.file);
+    
+    this.selectedPessoa.file = arquivo;
+    this.form.patchValue({
+      file: arquivo
+    });
+    
+  }
+
+  getBase64(file) {
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+ }
 
   save() {
     if (this.form.invalid) {
@@ -79,6 +102,8 @@ email =  new FormControl(this.selectedPessoa.email || '', [Validators.required, 
           this.list.get();
         });
     } else {
+      debugger;
+      console.log(this.form.value);
       this.pessoaService.create(this.form.value).subscribe(() => {
         this.isModalOpen = false;
         this.form.reset();
