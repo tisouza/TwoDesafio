@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Distributed;
 using Two.Desafio.Authors;
 using Two.Desafio.Permissions;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Caching;
 using Volo.Abp.Domain.Repositories;
 
 namespace Two.Desafio.Authors
@@ -15,13 +17,16 @@ namespace Two.Desafio.Authors
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly AuthorManager _authorManager;
+        private readonly IDistributedCache<List<AuthorCacheItem>> _cache;
 
         public AuthorAppService(
             IAuthorRepository authorRepository,
-            AuthorManager authorManager)
+            AuthorManager authorManager,
+            IDistributedCache<List<AuthorCacheItem>> cache)
         {
             _authorRepository = authorRepository;
             _authorManager = authorManager;
+            _cache = cache;
         }
 
         //...SERVICE METHODS WILL COME HERE...
@@ -39,12 +44,28 @@ namespace Two.Desafio.Authors
                 input.Sorting = nameof(Author.Name);
             }
 
-            var authors = await _authorRepository.GetListAsync(
-                input.SkipCount,
-                input.MaxResultCount,
-                input.Sorting,
-                input.Filter
-            );
+            var result = await _cache.GetOrAddAsync(AuthorConsts.KeyCacheAuthor,
+                async () => {
+                    var authors = await _authorRepository.GetListAsync(
+                                input.SkipCount,
+                                input.MaxResultCount,
+                                input.Sorting,
+                                input.Filter
+                                );
+                    return ObjectMapper.Map<List<Author>, List<AuthorCacheItem>>(authors);
+                    
+                },
+                () => new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpiration = DateTimeOffset.Now.AddHours(1)
+                }
+                );
+            //var authors = await _authorRepository.GetListAsync(
+            //    input.SkipCount,
+            //    input.MaxResultCount,
+            //    input.Sorting,
+            //    input.Filter
+            //);
 
             var totalCount = input.Filter == null
                 ? await _authorRepository.CountAsync()
@@ -53,7 +74,7 @@ namespace Two.Desafio.Authors
 
             return new PagedResultDto<AuthorDto>(
                 totalCount,
-                ObjectMapper.Map<List<Author>, List<AuthorDto>>(authors)
+                ObjectMapper.Map<List<AuthorCacheItem>, List<AuthorDto>>(result)
             );
         }
 

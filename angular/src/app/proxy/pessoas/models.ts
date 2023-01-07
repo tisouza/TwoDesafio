@@ -16,6 +16,7 @@ export interface PessoaDto extends EntityDto<string> {
   birthDate?: string;
   email?: string;
   job?: string;
+  file?:any;
 }
 
 export interface UpdatePessoaDto {

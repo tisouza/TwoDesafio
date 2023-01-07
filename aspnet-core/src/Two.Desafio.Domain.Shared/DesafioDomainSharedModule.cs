@@ -1,4 +1,4 @@
-﻿using Two.Desafio.Localization;
+using Two.Desafio.Localization;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.FeatureManagement;
@@ -12,6 +12,7 @@ using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.BlobStoring.Database;
 
 namespace Two.Desafio;
 
@@ -25,7 +26,8 @@ namespace Two.Desafio;
     typeof(AbpSettingManagementDomainSharedModule),
     typeof(AbpTenantManagementDomainSharedModule)    
     )]
-public class DesafioDomainSharedModule : AbpModule
+[DependsOn(typeof(BlobStoringDatabaseDomainSharedModule))]
+    public class DesafioDomainSharedModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {

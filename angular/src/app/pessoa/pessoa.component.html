@@ -90,6 +90,10 @@
             <label for="pessoa-job">{{'::Job' | abpLocalization}}</label>
             <input type="text" id="pessoa-job" class="form-control" formControlName="job"  />
         </div>
+        <div class="form-group">
+            <label for="exampleFormControlFile1">{{'::File' | abpLocalization}}</label>
+            <input type="file" class="form-control-file" (change)="onChangeFile($event)" id="exampleFormControlFile1" >
+          </div>
       </form>
     </ng-template>
   

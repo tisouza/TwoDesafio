@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using AutoMapper.Internal.Mappers;
 using Microsoft.EntityFrameworkCore;
 using Two.Desafio.EntityFrameworkCore;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.ObjectMapping;
 
 namespace Two.Desafio.Authors
 {
@@ -43,5 +45,6 @@ namespace Two.Desafio.Authors
                 .Take(maxResultCount)
                 .ToListAsync();
         }
-    }
+
+     }
 }

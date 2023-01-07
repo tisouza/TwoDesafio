@@ -7,19 +7,24 @@ using System.Threading.Tasks;
 using Two.Desafio.Authors;
 using Two.Desafio.Permissions;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Auditing;
+using Volo.Abp.BlobStoring;
 using Volo.Abp.Domain.Repositories;
 
 namespace Two.Desafio.Pessoas
 {
+    [Audited]
     public class PessoaAppService : DesafioAppService, IPessoaAppService
     {
         private readonly IPessoaRepository _pessoaRepository;
         private readonly PessoaManager _pessoaManager;
+        private readonly IBlobContainer _blobContainer;
 
-        public PessoaAppService(PessoaManager pessoaManager, IPessoaRepository pessoaRepository)
+        public PessoaAppService(PessoaManager pessoaManager, IPessoaRepository pessoaRepository, IBlobContainer blobContainer)
         {
             _pessoaManager = pessoaManager;
-            _pessoaRepository = pessoaRepository; ;
+            _pessoaRepository = pessoaRepository;
+            _blobContainer = blobContainer;
         }
         
         [Authorize(DesafioPermissions.Pessoas.Create)]
@@ -33,7 +38,9 @@ namespace Two.Desafio.Pessoas
                 );
 
             await _pessoaRepository.InsertAsync(pessoa);
-
+            
+            await _blobContainer.SaveAsync(pessoa.Id.ToString(), 
+                Convert.FromBase64String(input.File.Substring(input.File.LastIndexOf("base64,")).Replace("base64,", "")));
             return ObjectMapper.Map<Pessoa, PessoaDto>(pessoa);
         }
 
@@ -49,7 +56,7 @@ namespace Two.Desafio.Pessoas
             var pessoa = await _pessoaRepository.GetAsync(id);
             return ObjectMapper.Map<Pessoa, PessoaDto>(pessoa);
         }
-
+        [Audited]
         public async Task<PagedResultDto<PessoaDto>> GetListAsync(GetPessoaListDto input)
         {
             if (input.Sorting.IsNullOrWhiteSpace())
