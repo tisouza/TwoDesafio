@@ -17,6 +17,7 @@
     },
     "Two.Desafio.HttpApi.Host": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "https://localhost:44385",
       "environmentVariables": {

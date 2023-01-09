@@ -2,6 +2,7 @@ import type { CreatePessoaDto, GetPessoaListDto, PessoaDto, UpdatePessoaDto } fr
 import { RestService } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,7 @@ export class PessoaService {
     { apiName: this.apiName });
   
 
-  getList = (input: GetPessoaListDto) =>
+  getList = (input: GetPessoaListDto) =>    
     this.restService.request<any, PagedResultDto<PessoaDto>>({
       method: 'GET',
       url: '/api/app/pessoa',
@@ -52,5 +53,6 @@ export class PessoaService {
     },
     { apiName: this.apiName });
 
-  constructor(private restService: RestService) {}
+
+  constructor(private restService: RestService, private httpClient : HttpClient) {}
 }
