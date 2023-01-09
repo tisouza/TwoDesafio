@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="card m-5 p-3">
+        <div class="card-body">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>BirthDate</th>
+                    <th>Email</th>
+                    <th>Job</th>                    
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let pessoa of pessoas">
+                    <td>{{ pessoa.name }}</td>
+                    <td>{{ pessoa.birthdate }}</td>
+                    <td>{{ pessoa.email }}</td>
+                    <td>{{ pessoa.job }}</td>                    
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

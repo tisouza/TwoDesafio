@@ -14,6 +14,9 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_ROUTE_PROVIDER } from './route.provider';
+import {DataTablesModule} from 'angular-datatables';
+import { HttpClientModule } from '@angular/common/http';
+import { TesteComponent } from './teste/teste.component';
 
 @NgModule({
   imports: [
@@ -31,8 +34,10 @@ import { APP_ROUTE_PROVIDER } from './route.provider';
     SettingManagementConfigModule.forRoot(),
     ThemeLeptonXModule.forRoot(),
     SideMenuLayoutModule.forRoot(),
+    DataTablesModule,
+    HttpClientModule
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, TesteComponent],
   providers: [APP_ROUTE_PROVIDER],
   bootstrap: [AppComponent],
 })

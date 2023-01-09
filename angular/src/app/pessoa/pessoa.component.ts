@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ListService, PagedResultDto } from '@abp/ng.core';
-import { PessoaService, PessoaDto } from '@proxy/pessoas';
+import { PessoaService, PessoaDto, GetPessoaListDto } from '@proxy/pessoas';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
 import { NgbDateNativeAdapter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
@@ -23,7 +23,9 @@ export class PessoaComponent implements OnInit {
   customValidatorEmail = false;
   email =  new FormControl(this.selectedPessoa.email || '', [Validators.required, Validators.email, customValidator()]);
   file: File;
-
+  itensGrid:PessoaDto[];
+  
+  
   constructor(
     public readonly list: ListService,
     private pessoaService: PessoaService,
@@ -32,11 +34,29 @@ export class PessoaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const pessoaStreamCreator = (query) => this.pessoaService.getList(query);
+    this.buscarPessoas('');
+  }
 
+  buscarPessoas(name :string){
+    let input: any = {};
+    this.list.filter = name;
+    const pessoaStreamCreator = (input) => this.pessoaService.getList(input);
     this.list.hookToQuery(pessoaStreamCreator).subscribe((response) => {
       this.pessoa = response;
+      this.itensGrid = response.items;
     });
+  }
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+
+    // filter our data
+    this.buscarPessoas(val);
+
+    // update the rows
+    //this.itensGrid = temp.items;
+    // Whenever the filter changes, always go back to the first page
+    //this.table.offset = 0;
   }
 
   createPessoa() {
@@ -101,9 +121,8 @@ export class PessoaComponent implements OnInit {
           this.form.reset();
           this.list.get();
         });
-    } else {
-      debugger;
-      console.log(this.form.value);
+    } else {     
+      
       this.pessoaService.create(this.form.value).subscribe(() => {
         this.isModalOpen = false;
         this.form.reset();

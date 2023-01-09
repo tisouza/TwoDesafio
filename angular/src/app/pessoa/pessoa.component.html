@@ -17,7 +17,13 @@
       </div>
     </div>
     <div class="card-body">
-      <ngx-datatable [rows]="pessoa.items" [count]="pessoa.totalCount" [list]="list" default>
+      <input
+        type="text"
+        style="padding:8px;margin:15px auto;width:30%;"
+        placeholder="Type to filter the name column..."
+        (keyup)="updateFilter($event)"
+      />
+      <ngx-datatable #table [rows]="itensGrid" [count]="pessoa.totalCount" [list]="list" default>
         <ngx-datatable-column
           [name]="'::Actions' | abpLocalization"
           [maxWidth]="150"

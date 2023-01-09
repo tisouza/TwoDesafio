@@ -39,7 +39,8 @@ namespace Two.Desafio.Pessoas
 
             await _pessoaRepository.InsertAsync(pessoa);
             
-            await _blobContainer.SaveAsync(pessoa.Id.ToString(), 
+            if(input.File != null)
+                await _blobContainer.SaveAsync(pessoa.Id.ToString(), 
                 Convert.FromBase64String(input.File.Substring(input.File.LastIndexOf("base64,")).Replace("base64,", "")));
             return ObjectMapper.Map<Pessoa, PessoaDto>(pessoa);
         }
